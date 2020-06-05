@@ -701,6 +701,141 @@
                     </div>
                 </div>
             </div>
+            <?php
         }
+
+        public function insertarCategoryController(){
+            if(isset($_POST["ncategoriatxt"]) && isset($_POST["dcategoriatxt"])){
+                $datosController = array("nombre_categoria"=>$_POST["ncategoriatxt"], "descripcion_categoria"=>$_POST["dcategoriatxt"]);
+                $respuesta = Datos::insertarCategoryModel($datosController, "categories");
+                if($respuesta == "success"){
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Exito!
+                                </h5>
+                                Categoria Agregada con Exito
+                            </div>
+                        </div>
+                    ';
+                }else{
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al momento de Agregar una Categoria, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+                }
+            }
+        }
+
+        public function editarCategoryController(){
+            $datosController = $_GET["idCategoryEditar"];
+            $respuesta = Datos::editarCategoryModel($datosController, "categories");
+            ?>
+            <div class="col-mb-6 mt-3">
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h4><b>Editor</b> de Categoria</h4>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="index.php?action=categorias">
+                            <div class="form-group">
+                                <input type="hidden" name="idCategoryEditar" class="form-control" value="<?php echo $respuesta["id"]; ?>" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="ncategoriatxt">Nombre de la Categoria:</label>
+                                <input class="form-control" name="ncategoriatxteditar" id="ncategoriatxt" type="text" value="<?php echo $respuesta["nombre_categoria"]; ?>" placeholder="Ingrese el Nombre de la Categoria">
+                            </div>
+                            <div class="form-group">
+                                <label for="ncategoriatxt">Descripcion de la Categoria:</label>
+                                <input class="form-control" name="dcategoriatxteditar" id="dcategoriatxt" type="text" value="<?php echo $respuesta["descripcion_categoria"]; ?>" placeholder="Ingrese la Descripcion de la Categoria">
+                            </div>
+                            <button class="btn btn-primary" type="submit">Editar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+
+        public function actualizarCategoryController(){
+            if(isset($_POST["ncategoriatxteditar"]) && isset($_POST["dcategoriatxteditar"])){
+                $datosController = array("id"=>$_POST["idCategoryEditar"], "nombre_categoria"=>$_POST["ncategoriatxteditar"], "descripcion_categoria"=>$_POST["dcategoriatxteditar"]);
+                $respuesta = Datos::actualizarCategoryModel($datosController, "categories");
+                if($respuesta == "success"){
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Exito!
+                                </h5>
+                                Categoria Editada con Exito
+                            </div>
+                        </div>
+                    ';
+                }else{
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al momento de Editar una Categoria, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+                }
+            }
+        }
+
+        public function eliminarCategoryController(){
+            if(isset($_GET["idBorrar"])){
+                $datosController = $_GET["idBorrar"];
+                $respuesta = Datos::eliminarCategoryModel($datosController, "categories");
+                if($respuesta == "success"){
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Exito!
+                                </h5>
+                                Categoria Eliminada con Exito
+                            </div>
+                        </div>
+                    ';
+                }else{
+                    echo '
+                        <div class="col-md-6 mt-3">
+                            <div class="alert alert-danger alert-dismissible">
+                                <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button>
+                                <h5>
+                                    <i class="icon fas fa-ban"></i>
+                                    ¡Error!
+                                </h5>
+                                Se ha producido un error al momento de Eliminar una Categoria, trate de nuevo.
+                            </div>
+                        </div>
+                    ';
+                }
+            }
+        }
+
+        
     }
 ?>
