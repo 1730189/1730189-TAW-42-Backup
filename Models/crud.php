@@ -248,5 +248,9 @@
             }
             $stmt->close();
         }
+
+        public function vistaCategoriesModel($tabla){
+            $stmt = Conexion::conectar()->prepare("SELECT id_category as 'id', name_category as 'ncategoria', descripcion_category as 'dcategoria', date_added as 'fcategoria' FROM $tabla");
+        }
     }
 ?>
