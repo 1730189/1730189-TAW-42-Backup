@@ -31,7 +31,7 @@
 
 <body class="hold-transitation sidebar-mini layout layout-fixed">
     <?php
-        Se Inicia la seasió y se verfifica que se haya inciado sesión correctamente para mostrar el tablero y el menu principal
+        //Se Inicia la seasió y se verfifica que se haya inciado sesión correctamente para mostrar el tablero y el menu principal
         session_start();
         if(isset($_SESSION['validar']) && $_SESSION['validar']==true){
             include "modules/navegacion.php";
