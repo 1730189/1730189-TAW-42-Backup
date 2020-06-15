@@ -1,18 +1,12 @@
-<?php
-    //Se activa el almacenamiento en el buffer para poder acceder a los valores guardados en los arreglos asociados $_GET y $_SESSION sin ningun problema
-    ob_start();
+<?php 
 
-    //Llamada al archivo que tiene los controladores y modelos que se necesitan para que el sistema funcione correctamente
-    require_once 'Model/enlaces.php';
-    require_once 'Model/crud.php';
-    require_once 'Controllers/controller.php';
+	ob_start();
 
-    //creamos un objeto
+	require_once("controllers/controller.php");
+	require_once("models/enlaces.php");
+	require_once("models/model.php");
 
-    $mvc = new MvcController();
-
-    //Mostrar la función o método "página" disponible en controllers/controller.php 
-
-    $mvc -> plantilla();
+	$mvc = new MvcController();
+	$mvc->plantilla();
 
 ?>
