@@ -1,7 +1,7 @@
 <?php
 
 	class Paginas {
-		public static function enlacesPaginasModel($enlacesModel){
+		public function enlacesPaginasModel($enlacesModel){
 			if ($enlacesModel == "ingresar" || $enlacesModel == "usuarios"
 			|| $enlacesModel == "inventario" || $enlacesModel == "categorias"
 			|| $enlacesModel == "tablero" || $enlacesModel == "ventas"
