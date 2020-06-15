@@ -1,5 +1,5 @@
 <?php
-
+//Prueba Mayusculas
 class MvcController{
 
 	public function plantilla(){
