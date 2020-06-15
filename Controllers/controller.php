@@ -2,11 +2,11 @@
 
 class MvcController{
 
-	public static function plantilla(){
+	public function plantilla(){
 		include "views/template.php";
 	}
 
-	public static function enlacesPaginasController(){
+	public function enlacesPaginasController(){
 		if (isset($_GET['action'])) {
 			$enlaces = $_GET['action'];
 		} else {
@@ -17,7 +17,7 @@ class MvcController{
 		include $respuesta;
 	}
 
-	public static function registroUsuarioController(){
+	public function registroUsuarioController(){
 		if (isset($_POST['usuarioRegistro'])) {
 			// Recibe a través del método post el name (html) de usuario, password y email, se almacenan los datos en una variable o propiedad de tipo array asociativo con sus respectivas propiedades (usuario, password, email)
 
@@ -38,7 +38,7 @@ class MvcController{
 		}
 	}
 
-	public static function ingresoUsuarioController(){
+	public function ingresoUsuarioController(){
 		if (isset($_POST["txtUser"]) && isset($_POST["txtPassword"])) {
 			$datosController = array("user"=>$_POST["txtUser"], "password"=>$_POST["txtPassword"]);
 			$respuesta = Datos::ingresoUserModel($datosController, "users");
@@ -56,7 +56,7 @@ class MvcController{
 		}
 	}
 
-	public static function vistaUserController(){
+	public function vistaUserController(){
 		$respuesta = Datos::vistaUserModel("users");
 		foreach ($respuesta as $row => $item) {
 			echo '
@@ -77,7 +77,7 @@ class MvcController{
 		}
 	}
 
-	public static function registrarUserController(){
+	public function registrarUserController(){
 		?>
 		<div class="col-md-6 mt-3">
 			<div class="card card-primary">
@@ -116,7 +116,7 @@ class MvcController{
 		<?php
 	}
 
-	public static function insertarUserController(){
+	public function insertarUserController(){
 		if (isset($_POST["nusuariotxt"])) {
 			//Encriptar la contraseña
 			$_POST["ucontratxt"] = password_hash($_POST["ucontratxt"], PASSWORD_DEFAULT);
@@ -157,7 +157,7 @@ class MvcController{
 		}
 	}
 
-	public static function editarUserController() {
+	public function editarUserController() {
 		$datosController = $_GET["idUserEditar"];
 		//envío de datos al mododelo
 		$respuesta = Datos::editarUserModel($datosController,"users");
@@ -200,7 +200,7 @@ class MvcController{
 		<?php
 	}
 
-	public static function actualizarUserController() {
+	public function actualizarUserController() {
 		if (isset($_POST["nusuariotxtEditar"])) {
 			$_POST["contratxtEditar"] = password_hash($_POST["contratxtEditar"], PASSWORD_DEFAULT);
 
@@ -245,7 +245,7 @@ class MvcController{
 		}
 	}
 
-	public static function eliminarUserController() {
+	public function eliminarUserController() {
 		if (isset($_GET["idBorrar"])) {
 			$datosController = $_GET["idBorrar"];
 
@@ -281,7 +281,7 @@ class MvcController{
 		}
 	}
 
-	public static function contarFilas(){
+	public function contarFilas(){
 
     	$respuesta_users =Datos::contarFilasModel("users");
 		echo '
@@ -328,7 +328,7 @@ class MvcController{
 
     }
 
-    public static function vistaProductsController(){
+    public function vistaProductsController(){
 		$respuesta = Datos::vistaProductsModel("products");
 		foreach ($respuesta as $row => $item) {
 			echo '
@@ -355,7 +355,7 @@ class MvcController{
 		}
 	}
 
-	public static function registrarProductController() {
+	public function registrarProductController() {
 		?>
 		<div class="col-md-6 mt-3">
 			<div class="card card-primary">
@@ -401,7 +401,7 @@ class MvcController{
 
 	/*-- Esta funcion permite insertar productos llamando al modelo que se encuentra en elarchivo crud de modelos confirma con un isset que la caja de texto del codigo este llena y procede a llenar en una variable llamada datos controller este arreglo se manda como parametro aligual que elnombre de la tabla,una vez se obtiene una respuesta de la funcion del modelo de inserccion tenemos que checar si la respuesta fue afirmativa hubo un error y mostrara los respectivas alerta,para insertar datos en la tabla de historial se tiene que mandar a un modelollamado ultimoproductmodel este traera el ultimo dato insertado que es el id del producto que se manda en elarray de datosController2 junto al nombre de la tabla asi insertando los datos en la tabla historial --*/
 
-	public static function insertarProductController() {
+	public function insertarProductController() {
 		if (isset($_POST["codigotxt"])) {
 
 			$datosController = array(
@@ -450,7 +450,7 @@ class MvcController{
 		}
 	}
 
-public static function editarProductoController(){
+public function editarProductoController(){
 		$datosController = $_GET["idProductEditar"];
 		$respuesta = Datos::editarProductsModel($datosController, "products");
 		?>
@@ -504,7 +504,7 @@ public static function editarProductoController(){
 
 	/*-- Esta funcion permite actualizar los datos en la tabla productos a partir del metodo form anterior mandando atravez del modelo del crud a traves del arreglo y con la variable respuesta mandamos dichos datos porque se llama al modelo actualizarproductsmodel si en el modelo se realizo correctamente entonces mandara una alerta decorrecto y pasara allenar dichos datos en elmodelo de insertar historial model en caso contrario no se hara nada y mostrara mensaje de error --*/
 
-	public static function actualizarProductController() {
+	public function actualizarProductController() {
 		if (isset($_POST["codigotxtEditar"])) {
 			$datosController = array(
 				"id"=>$_POST["idProductEditar"],
@@ -550,7 +550,7 @@ public static function editarProductoController(){
 	}
 
 	//Esta funcion permite eliminar datos a partir del id seleccionado en la tabla a traves del boton mandando el id al modelo y la tabla una vez se borra mostrara un mensaje de error o de correcto dependiendo del caso
-	public static function eliminarProductController(){
+	public function eliminarProductController(){
 		if(isset($_GET["idBorrar"])){
     		$datosController=$_GET["idBorrar"];
     		$respuesta=Datos::eliminarProductsModel($datosController,"products");
@@ -585,7 +585,7 @@ public static function editarProductoController(){
 	}
 
 
-	public static function addProductController(){
+	public function addProductController(){
 		$datosController=$_GET["idProductAdd"];
 		$respuesta=Datos::editarProductsModel($datosController, "products");
 		?>
@@ -621,7 +621,7 @@ public static function editarProductoController(){
 	<?php
 	}
 
-	public static function actualizarStockController(){
+	public function actualizarStockController(){
 		if(isset($_POST["addstocktxt"])){
 			$datosController=array("id"=>$_POST["idProductAdd"], "stock"=>$_POST["addstocktxt"]);
 			$respuesta=Datos::pushProductsModel($datosController, "products");
@@ -657,7 +657,7 @@ public static function editarProductoController(){
 			}
 		}
 	//Esta funcion actualiza y llama al modelo de la tabla producto a su vez inserta una nueva fila a la tabla Historial, si el update sale correcto y elimina los productos del stock entonces insertara la actualizacion en la tabla Historial, si todo sale bien mostrara un mensaje de errror o de correcto dependiendo de la respuesta
-	public static function actualizar2StockController(){
+	public function actualizar2StockController(){
 		if(isset($_POST["delstocktxt"])){
 			$datosController=array("id"=>$_POST["idProductDel"], "stock"=>$_POST["delstocktxt"]);
 			$respuesta=Datos::pullProductsModel($datosController, "products");
@@ -694,7 +694,7 @@ public static function editarProductoController(){
 		}
 
 	//Esta funcion permite quitar productos al stock a traves del boton y un formulario para agregar dicha cantidad al producto se llama al modelo correspondiente para asi pasar al controlador que actualiza dicho modelo
-	public static function delProductController(){
+	public function delProductController(){
 		$datosController=$_GET["idProductDel"];
 		$respuesta=Datos::editarProductsModel($datosController, "products");
 		?>
@@ -728,7 +728,7 @@ public static function editarProductoController(){
 	<?php
 	}
 
-	public static function vistaCategoriasController(){
+	public function vistaCategoriasController(){
 			$respuesta= Datos::vistaCategoriesModel("categories");
 
 			foreach ($respuesta as $row => $item) {
@@ -750,7 +750,7 @@ public static function editarProductoController(){
 
 	}
 
-	public static function registrarCategoryController(){
+	public function registrarCategoryController(){
 		?>
 		<div class="col-md-6 mt-3">
 			<div class="card card-primary">
@@ -776,7 +776,7 @@ public static function editarProductoController(){
 		<?php
 	}
 
-	public static function vistaHistorialController(){
+	public function vistaHistorialController(){
 		$respuesta= Datos::vistaHistorialModel("historial");
 		foreach ($respuesta as $row => $item) {
 			echo '
@@ -792,7 +792,7 @@ public static function editarProductoController(){
 		}
 	}
 
-	public static function insertarCategoryController(){
+	public function insertarCategoryController(){
 		if (isset($_POST["ncategoriatxt"]) && isset($_POST["dcategoriatxt"])) {
 			$datosController = array("nombre_categoria"=>$_POST["ncategoriatxt"], "descripcion_categoria"=>$_POST["dcategoriatxt"]);
 			$respuesta = Datos::insertarCategoryModel($datosController, "categories");
@@ -825,7 +825,7 @@ public static function editarProductoController(){
 	}
 
 	/* Este controlador funciona para mostrar un formulario al usuario cargando los datos del producto que desea editar mediante el uso de un modelp */
-	public static function editarCategoryController(){
+	public function editarCategoryController(){
 		$datosController = $_GET["idCategoryEditar"];
 		$respuesta = Datos::editarCategoryModel($datosController, "categories");
 		?>
@@ -855,7 +855,7 @@ public static function editarProductoController(){
 		<?php
 	}
 
-	public static function actualizarCategoryController(){
+	public function actualizarCategoryController(){
 		if (isset($_POST["ncategoriatxtEditar"]) && isset($_POST["dcategoriatxtEditar"])) {
 			$datosController = array("id"=>$_POST["idCategoryEditar"], "nombre_categoria"=>$_POST["ncategoriatxtEditar"], "descripcion_categoria"=>$_POST["dcategoriatxtEditar"]);
 			$respuesta = Datos::actualizarCategoryModel($datosController, "categories");
@@ -887,7 +887,7 @@ public static function editarProductoController(){
 		}
 	}
 
-public static function eliminarCategoryController(){
+public function eliminarCategoryController(){
         if (isset($_GET["idBorrar"])) {
             $datosController = $_GET["idBorrar"];
             $respuesta = Datos::eliminarCategoryModel($datosController, "categories");

@@ -6,7 +6,7 @@
 
     // MODELOS PARA LOS USUARIOS //
     /*-- Modelo para el inicio de sesión de los usuarios --*/
-    public static function ingresoUsuarioModel($datosModel,$tabla){
+    public function ingresoUsuarioModel($datosModel,$tabla){
       //Preparar las sentencias de PDO para ejecutar el Qery de validación de usuario
       $stmt = Conexion::conectar()->prepare(
         "SELECT CONCAT(firstname,' ',lastname) AS 'nombre_usuario',
@@ -21,7 +21,7 @@
     }
 
     /*-- Este modelo sirve para mostrar toda la información de los usuarios que existen --*/
-    public static function vistaUsersModel($tabla) {
+    public function vistaUsersModel($tabla) {
       // Preparar la sentencia de PDO
       $stmt = Conexion::conectar()->prepare("SELECT user_id AS 'id', firstname,
         lastname, user_name, user_password,user_email, date_added FROM $tabla");
@@ -31,7 +31,7 @@
     }
 
     /*-- Este modelo sirve para insertar un nuevo usuario a la bd --*/
-    public static function insertarUserModel($datosModel,$tabla) {
+    public function insertarUserModel($datosModel,$tabla) {
       //preparamos el PDO
       $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla
         (firstname,lastname,user_name,user_password,user_email)
@@ -50,7 +50,7 @@
     }
 
     /*-- Este modelo sirve para cargar la información del usuario para su posterior modificación --*/
-    public static function editarUserModel($datosModel, $tabla) {
+    public function editarUserModel($datosModel, $tabla) {
 
       $stmt = Conexion::conectar()->prepare("SELECT user_id AS 'id',
         firstname AS 'nusuario', lastname AS 'ausuario', user_name AS 'usuario',
@@ -64,7 +64,7 @@
     }
 
     /*-- Este modelo sirve para guardar los cambios hechos a un usuarios en particular --*/
-    public static function actualizarUserModel($datosModel, $tabla) {
+    public function actualizarUserModel($datosModel, $tabla) {
 
       //Sentencia de PDO para ejecutar la actualzación del usuario
       $stmt = Conexion::conectar()->prepare("UPDATE $tabla SET firstname = :nusuario, lastname = :ausuario, user_name = :usuario, user_password = :contra, user_email = :email WHERE user_id = :id");
@@ -84,7 +84,7 @@
     }
 
     /*-- Este modelo sirve para eliminar a un usuario de la base de datos --*/
-    public static function eliminarUserModel($datosModel, $tabla) {
+    public function eliminarUserModel($datosModel, $tabla) {
       $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE user_id = :id");
       $stmt->bindParam(":id",$datosModel,PDO::PARAM_INT);
       if ($stmt->execute()) {
@@ -96,7 +96,7 @@
     }
 
     //CONTAR FILAS ---------------------------------------------------------------
-    public static function contarFilasModel($tabla){
+    public function contarFilasModel($tabla){
       $stmt = Conexion::conectar() -> prepare("SELECT COUNT(*) AS 'filas'
       FROM $tabla");
       $stmt -> execute();
@@ -105,7 +105,7 @@
       $stmt -> close();
     }
 
-    public static function sumarGananciaModel($tabla){
+    public function sumarGananciaModel($tabla){
       $stmt = Conexion::conectar() -> prepare("SELECT SUM(amount) AS 'total'
       FROM $tabla");
       $stmt -> execute();
@@ -114,7 +114,7 @@
       $stmt -> close();
     }
 
-    public static function obtenerProductModel($tabla){
+    public function obtenerProductModel($tabla){
       $stmt = Conexion::conectar() -> prepare("SELECT id_product AS 'id', name_product
       AS 'nproducto', price_product AS 'nprecio'
       FROM $tabla WHERE stock >= 1");

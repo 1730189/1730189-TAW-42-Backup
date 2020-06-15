@@ -4,7 +4,7 @@
 
 	class Datos extends Conexion {
 
-		public static function ingresoUserModel($datosModel, $tabla) {
+		public function ingresoUserModel($datosModel, $tabla) {
 			$stmt = Conexion::conectar()->prepare("SELECT CONCAT(firstname, ' ', lastname) AS 'nombre_usuario', user_name AS 'usuario', user_password AS 'contrasena', user_id AS 'id' FROM $tabla WHERE user_name = :usuario");
 			$stmt->bindParam(":usuario", $datosModel["user"], PDO::PARAM_STR);
 			$stmt -> execute();
@@ -12,14 +12,14 @@
 			$stmt -> close();
 		}
 
-		public static function vistaUserModel($tabla) {
+		public function vistaUserModel($tabla) {
 			$stmt = Conexion::conectar()->prepare("SELECT user_id AS id, firstname, lastname, user_name, user_password, user_email, date_added FROM $tabla");
 			$stmt -> execute();
 			return $stmt->fetchAll();
 			$stmt->close();
 		}
 
-		public static function insertarUserModel($datosModel, $tabla) {
+		public function insertarUserModel($datosModel, $tabla) {
 			$stmt = Conexion::conectar()->prepare("INSERT INTO users (firstname, lastname, user_name, user_password, user_email) VALUES (:nusuario, :ausuario, :usuario, :contra, :email)");
 			$stmt -> bindParam(":nusuario", $datosModel["nusuario"], PDO::PARAM_STR);
 			$stmt -> bindParam(":ausuario", $datosModel["ausuario"], PDO::PARAM_STR);
@@ -36,7 +36,7 @@
 			$stmt -> close();
 		}
 
-		public static function editarUserModel($datosModel, $tabla) {
+		public function editarUserModel($datosModel, $tabla) {
 			$stmt = Conexion::conectar()->prepare("SELECT user_id AS id, firstname AS 'nusuario', lastname AS 'ausuario', user_name AS 'usuario', user_password AS 'contra', user_email AS 'email' FROM $tabla WHERE user_id = :id");
 			$stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
 			$stmt->execute();
@@ -44,7 +44,7 @@
 			$stmt->close();
 		}
 
-		public static function actualizarUserModel($datosModel, $tabla) {
+		public function actualizarUserModel($datosModel, $tabla) {
 			$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET firstname = :nusuario,
 				lastname = :ausuario, user_name = :usuario, user_password = :contra,
 				user_email = :email WHERE user_id = :id");
@@ -65,7 +65,7 @@
 			$stmt -> close();
 		}
 
-		public static function eliminarUserModel($datosModel, $tabla) {
+		public function eliminarUserModel($datosModel, $tabla) {
 			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE user_id = :id");
 			$stmt -> bindParam(":id", $datosModel, PDO::PARAM_INT);
 
@@ -79,28 +79,28 @@
 
 		}
 
-		public static function contarFilasModel($tabla) {
+		public function contarFilasModel($tabla) {
 			$stmt = Conexion::conectar()->prepare("SELECT COUNT(*) AS 'filas' FROM $tabla");
 			$stmt->execute();
 			return $stmt->fetch();
 			$stmt->close();
 		}
 
-		public static function sumarGananciaModel($tabla){
+		public function sumarGananciaModel($tabla){
 			$stmt = Conexion::conectar()->prepare("SELECT SUM(amount) AS total FROM $tabla");
 			$stmt->execute();
 			return $stmt->fetch();
 			$stmt->close();
 		}
 
-		public static function obtenerProductsModel($tabla){
+		public function obtenerProductsModel($tabla){
 			$stmt = Conexion::conectar()->prepare("SELECT id_product AS 'id', name_product AS 'nproducto', price_product AS 'nprecio' FROM $tabla WHERE stock >= 1");
 			$stmt->execute();
 			return $stmt->fetchAll();
 			$stmt->close();
 		}
 
-		public static function vistaProductsModel($tabla){
+		public function vistaProductsModel($tabla){
 			$stmt=Conexion::conectar()->prepare("
 			SELECT
 			p.id_product AS 'id',
@@ -115,7 +115,7 @@
 			$stmt->close();
 		}
 
-		public static function insertarProductsModel($datosModel, $tabla){
+		public function insertarProductsModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla (
 				code_product, name_product, price_product, stock, id_category)
 				 VALUES (:codigo, :nombre,:precio, :stock, :categoria)");
@@ -132,7 +132,7 @@
 			$stmt->close();
 		}
 
-		public static function editarProductsModel($datosModel, $tabla){
+		public function editarProductsModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("SELECT
 				id_product AS 'id',
 				code_product AS 'codigo',
@@ -146,7 +146,7 @@
 			$stmt->close();
 		}
 
-		public static function pushProductsModel($datosModel, $tabla){
+		public function pushProductsModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("UPDATE $tabla SET stock=stock +:stock WHERE id_product=:id");
 			$stmt->bindParam(":stock",$datosModel["stock"],PDO::PARAM_INT);
 			$stmt->bindParam(":id",$datosModel["id"],PDO::PARAM_INT);
@@ -158,7 +158,7 @@
 			$stmt->close();
 		}
 
-		public static function pullProductsModel($datosModel, $tabla){
+		public function pullProductsModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("UPDATE $tabla SET stock=stock -:stock WHERE id_product=:id AND stock>=:stock");
 			$stmt->bindParam(":stock",$datosModel["stock"],PDO::PARAM_INT);
 			$stmt->bindParam(":id",$datosModel["id"],PDO::PARAM_INT);
@@ -170,7 +170,7 @@
 			$stmt->close();
 		}
 
-		public static function actualizarProductsModel($datosModel, $tabla){
+		public function actualizarProductsModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("UPDATE $tabla SET code_producto=:codigo, name_product=:nombre, price_product=:precio, id_category=:categoria, stock=:stock  WHERE id_product=:id");
 			$stmt->bindParam(":codigo",$datosModel["codigo"],PDO::PARAM_STR);
 			$stmt->bindParam(":nombre",$datosModel["nombre"],PDO::PARAM_STR);
@@ -186,14 +186,14 @@
 			$stmt->close();
 		}
 
-		public static function vistaCategoriesModel($tabla){
+		public function vistaCategoriesModel($tabla){
 			$stmt= Conexion::conectar()->prepare("SELECT id_category AS 'idc',name_category AS 'ncategoria', description_category AS 'dcategoria', date_added AS 'fcategoria' FROM $tabla");
 			$stmt->execute();
 			return $stmt->fetchAll();
 			$stmt->close();
 		}
 
-		public static function insertarCategoryModel($datosModel, $tabla){
+		public function insertarCategoryModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla (name_category, description_category) VALUES (:ncategoria, :dcategoria)");
 
 			$stmt->bindParam(":ncategoria",$datosModel["nombre_categoria"],PDO::PARAM_STR);
@@ -205,7 +205,7 @@
 			}
 			$stmt->close();
 		}
-		public static function editarCategoryModel($datosModel, $tabla){
+		public function editarCategoryModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("SELECT id_category AS 'id', name_category AS 'nombre_categoria', description_category AS 'descripcion_categoria' FROM $tabla WHERE id_category=:id");
 			$stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
 			$stmt->execute();
@@ -213,7 +213,7 @@
 			$stmt->close();
 		}
 		//Este modelo se utiliza para modificar una categoria
-		public static function actualizarCategoryModel($datosModel, $tabla){
+		public function actualizarCategoryModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("UPDATE $tabla SET name_category=:nombre_categoria, description_category=:descripcion_categoria  WHERE id_category=:id");
 			$stmt->bindParam(":nombre_categoria",$datosModel["nombre_categoria"],PDO::PARAM_STR);
 			$stmt->bindParam(":descripcion_categoria",$datosModel["descripcion_categoria"],PDO::PARAM_STR);
@@ -226,7 +226,7 @@
 			$stmt->close();
 		}
 		//Este modelo sirve para eliminar a un usuario de la base de datos
-		public static function eliminarCategoryModel($datosModel, $tabla){
+		public function eliminarCategoryModel($datosModel, $tabla){
             $stmt=Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_category=:id");
             $stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
             if($stmt->execute()){
@@ -238,13 +238,13 @@
         }
 		//MODELO PARA LOS SELECTS
 		//Este modelo permite crear un select y mostrarlo a partir de un select en php dando las categorias y nombres en el formulario producto
-		public static function obtenerCategoryModel($tabla){
+		public function obtenerCategoryModel($tabla){
 			$stmt=Conexion::conectar()->prepare("SELECT id_category AS 'id', name_category AS 'categoria' FROM $tabla");
 			$stmt->execute();
 			return $stmt->fetchAll();
 		}
 
-		public static function eliminarProductsModel($datosModel,$tabla){
+		public function eliminarProductsModel($datosModel,$tabla){
 			$stmt=Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id_product=:id");
 			$stmt->bindParam(":id", $datosModel, PDO::PARAM_INT);
 			if($stmt->execute()){
@@ -255,20 +255,20 @@
 			$stmt->close();
 		}
 
-		public static function ultimoProductsModel($tabla){
+		public function ultimoProductsModel($tabla){
 			$stmt=Conexion::conectar()->prepare("SELECT id_product AS 'id' FROM $tabla ORDER BY id_product DESC LIMIT 1");
 			$stmt->execute();
 			return $stmt->fetch();
 			$stmt->close();
 		}
-		public static function vistaHistorialModel($tabla){
+		public function vistaHistorialModel($tabla){
 			$stmt=Conexion::conectar()->prepare("SELECT CONCAT(u.firstname, ':', u.user_name) AS 'usuario', p.name_product AS 'producto', h.date AS 'fecha', h.reference AS 'referecia', h.note AS 'nota', h.quantity AS 'cantidad' FROM $tabla h INNER JOIN products p ON h.id_producto=p.id_product INNER JOIN users u ON h.user_id=u.user_id");
 			$stmt->execute();
 			return $stmt->fetchAll();
 			$stmt->close();
 		}
 		//Recibe la tavla por parametro al igual que los datos necesarios para el insert recolectados de los formularios anteriores los datos que necesita la tabla Historial de al insertar a partir de pdo
-		public static function insertarHistorialModel($datosModel, $tabla){
+		public function insertarHistorialModel($datosModel, $tabla){
 			$stmt=Conexion::conectar()->prepare("INSERT INTO $tabla(user_id, quantity, id_producto, note, reference)");
 			$stmt->bindParam(":user", $datosModel["user"], PDO::PARAM_INT);
 			$stmt->bindParam(":cantidad", $datosModel["cantidad"], PDO::PARAM_INT);
