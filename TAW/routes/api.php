@@ -4,99 +4,81 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Empleado;
 
-//COMANDOS
-/*
-1. Crear Migracion:
-php artisan make:migration Nombre
-
-2. Crear Modelo
-php artisan make:model Nombre
-*/
-
-//Listar Empleados
 Route::get('empleados', function(){
 	$empleados = Empleado::get();
 	return $empleados;
 });
 
-//Ruta para guardar nuevos empleados y recibir data
-Route::post('empleados'function(Request $request){
-	//Verificamos que los atos enviados se reciban bien para guardar en la bd,
-	//return 'Guardando Empleados'
-	
-	//Retorna todos los valores del array del form
+Route::post('empleados', function(Request $request){
+	//Verificamos que los datos enviados se reciban bien en la base de datos, para esto se utiliza request
+
+	//Retornar todos los valores del array
 	//return $request->all();
 
+	//Retornar solo un parametro
+
+	//return $request->input('estado_civil');
+
+	//Validar datos de empleados
 	$request->validate([
 		'nombres' => 'required|max:50',
-		'apellidos' => 'required|max:50',
-		'cedula' => 'required|max:20',
+		//'apellidos' => 'required|max:50',
+		'cedula'=> 'required|max:50',
 		'email' => 'required|max:50|email|unique:empleados',
 		'lugar_nacimiento' => 'required|max:50',
-		'estado_civil' => 'required|max:50',
-		'telefono' => 'required|numeric|max:50'
+		//'estado_civil' => 'required|max:50',
+		'telefono'=> 'required|numeric'
 	]);
 
-
-	$empleados = new Empleado;
+	//Llenar los parametros usando Request y guardarlo en la tabla de la bd
+	$empleado = new Empleado();
 	$empleado->nombres = $request->input('nombres');
-	$empleado->apellidos = $request->input('apellidos');
+	//$empleado->apellidos = $request->input('apellidos');
 	$empleado->cedula = $request->input('cedula');
 	$empleado->email = $request->input('email');
 	$empleado->lugar_nacimiento = $request->input('lugar_nacimiento');
 	$empleado->sexo = $request->input('sexo');
-	$empleado->estado_civil = $request->input('estado_civil');
+	//$empleado->estado_civil = $request->input('estado_civil');
 	$empleado->telefono = $request->input('telefono');
-	$empleados->save();
-	return "Usuario Creado";
+	$empleado->save();
+
+	return "Empleado creado";
+
 });
 
-//Ruta Actualizar Empleado
-Route::put('empleados/{id}',function(Request $request, $id){
-	$request -> validate([
-		'nombres' => 'required|max:50',
-		'apellidos' => 'required|max:50',
-		'cedula' => 'required|max:50',
-		'email' => 'required|max:50|email|unique:empleados,email' . $id,
-		'lugar_nacimiento' => 'required|max:50',
-		'sexo' => 'required|max:50',
-		'estado_civil' => 'required|max:50',
-		'telefono' => 'required|numeric',
+//Ruta para actualizar empleados
+
+Route::put('empleados/{id}', function(Request $request, $id){
+	$request->validate([
+		'nombres'=>'required|max:50',
+		//'apellidos'=>'required|max:50',
+		'cedula'=>'required|max:20',
+		'email'=>'required|max:50|unique:empleados,email,' . $id ,
+		'lugar_nacimiento'=>'required|max:50',
+		'sexo'=>'required|max:50',
+		//'estado_civil'=>'required|max:50',
+		'telefono'=>'required|numeric'
 	]);
 
 	$empleado = Empleado::findOrFail($id);
-	$empleado -> nombres = $request -> input('nombres');
-	$empleado -> apellidos = $request -> input('apellidos');
-	$empleado -> cedula = $request -> input('cedula');
-	$empleado -> email = $request -> input('email');
-	$empleado -> lugar_nacimiento = $request -> input('lugar_nacimiento');
-	$empleado -> sexo = $request -> input('sexo');
-	$empleado -> estado_civil = $request -> input('estado_civil');
-	$empleado -> telefono = $request -> input('telefono');
-	$empleado -> save();
-	return "Empleado Actualizado";
+	$empleado->nombres = $request->input('nombres');
+	//$empleado->apellidos = $request->input('apellidos');
+	$empleado->cedula = $request->input('cedula');
+	$empleado->email = $request->input('email');
+	$empleado->lugar_nacimiento = $request->input('lugar_nacimiento');
+	$empleado->sexo = $request->input('sexo');
+	//$empleado->estado_civil = $request->input('estado_civil');
+	$empleado->telefono = $request->input('telefono');
+	//return $empleado;
+	$empleado->save();
+
+	return "Empleado actualizado";
 });
 
-//Ruta Eliminar Empleado
-Route::delete('empleados/{id}',function{$id}){
+//Ruta para eliminar empleados
+
+Route::delete('empleados/{id}', function($id){
 	$empleado = Empleado::findOrFail($id);
-	$empleado -> delete();
-	return "Empleado Eliminado";
-}
-
-
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-/*
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});*/
+	$empleado->delete();
+	return "Empleado eliminado";
+});

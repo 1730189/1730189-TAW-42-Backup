@@ -2,9 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-//Vista para el controlador de empleados
-Route::resource('empleados','empleaosController');
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,30 +13,31 @@ Route::resource('empleados','empleaosController');
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function () {
+    return view('layout.patron');
 });
-
+/*
 Route::get('/productos', function () {
-    return view('Listado de Productos (get)');
+    return 'productos';
 });
 
 Route::post('/productos', function () {
-    return view('Almacenando Productos (post)');
+    return 'productos (post)';
 });
 
-Route::put('/productos/{id}', function ($id) {
-    return view('Actualizar Productos' . $id);
+Route::put('/productos{id}', function($id){
+	return ('actualizando producto: ' . $id);
 });
 
-//Parametros
-Route::get('saludo/{name}/{apodo?}', function ($name, $apodo = null) {
+Route::get('saludo/{nombre}/{apodo?}', function($nombre, $apodo=null){
 	//Poner la primera letra en mayuscula
-    $nombre=ucfirst($nombre);
-    //Validar si tiene un apodo
-    if($apodo){
-    	return "Bienvenido {$nombre}, tu apodo es {$apodo}";
-    }else{
-    	return "Bienvenido {$nombre}";
-    }
-});*/
+	$nombre = ucfirst($nombre);
+	if ($apodo) {
+		return "Bienvenido {$nombre}, tu apodo es {$apodo}";
+	} else {
+		return "Buenvenido {$nombre}";
+	}
+});
+*/
+
+Route::resource('empleados', 'EmpleadosController');
