@@ -138,7 +138,7 @@
             obtenerProductos(){
                 let me = this;
                 //Ruta del controlador
-                let url = '/1730123-TAW-42/practica5/public/productos';
+                let url = '/public/productos';
                 axios.get(url).then(function(response){
                     me.arregloProductos = response.data;
                 })
@@ -150,7 +150,7 @@
             guardarProductos(){
                 let me = this;
                 //Ruta del controlador
-                let url = '/1730123-TAW-42/practica5/public/productos';
+                let url = '/public/productos';
                 axios.post(url,{ 
                     //Propiedades del producto
                     'nombre':this.nombre,
