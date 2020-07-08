@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-//Vista para el controlador de empleado
-Route::resource('empleados','empleadosController');
-Route::resource('departamentos','DepartamentosController');
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,49 +13,10 @@ Route::resource('departamentos','DepartamentosController');
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/ventas', function () {
+    return view('contenido/contenido');
 });
 
-Route::get('/empleadosform', function () {
-    return view('formularioemp');
-});
-
-Route::get('/productos', function(){
-    return ('Listado de productos (get)');
-});
-
-Route::post('/productos', function(){
-    return ('Almacenando productos (post)');
-});
-
-Route::put('/productos/{id}', function($id){
-    return ('Actualizando productos: ' . $id);
-});
-
-//Parametro
-Route::get('saludo/{nombre}/{apodo?}', function ($nombre, $apodo=null){
-    //Poner la primera letra en mayuscula
-    $nombre = ucfirst($nombre);
-    //validar si tiene un apodo
-    if($apodo){
-        return "Bienvenido {$nombre}, tu apodo es {$apodo}";
-    }else{
-        return "Bienvenido {$nombre}";
-    }
-});
-
-//Metodos para obtencion, guardado y eliminacion de datos:
-//get, post(guardar), put, delete
-
-//COMANDOS
-/*
-1. Crear migracion:
-php artisan make:migration Nombre
-
-2. Crear modelo
-php artisan make:model Nombre
-
-3. 
-*/
+//Recursos del modelo y controlador Productos
+Route::resource('productos', 'productosController');
 
