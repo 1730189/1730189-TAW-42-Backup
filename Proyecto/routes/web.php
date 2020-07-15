@@ -69,3 +69,7 @@ Route::delete('/servicios/eliminarServicio/{id}', 'ServiciosController@deleteSer
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
